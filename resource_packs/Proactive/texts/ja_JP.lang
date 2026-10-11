@@ -1,0 +1,7 @@
+item.proactive_proactive.name=プロアクティブ
+item.proactive_waruactive.name=ワルアクティブ
+Category.Proactive=プロアクティブMod
+Key.toggleSilkTouch=シルクタッチモード切り替え
+Chat.SilkTouchMode=シルクタッチモード
+Chat.NormalMode=ノーマルモード
+Chat.needMoreExp=経験値が足りませんでした

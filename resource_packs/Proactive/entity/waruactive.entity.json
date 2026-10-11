@@ -1,0 +1,28 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "proactive:waruactive",
+
+            "materials": {
+                "default": "entity_alphatest"
+            },
+
+            "textures": {
+                "default": "textures/items/waruactive"
+            },
+
+            "geometry": {
+                "default": "geometry.item_sprite"
+            },
+
+            "render_controllers": ["controller.render.proactive"],
+            "animations": {
+                "billboard": "animation.proactive.flat_billboard"
+            },
+            "scripts": {
+                "animate": ["billboard"]
+            }
+        }
+    }
+}

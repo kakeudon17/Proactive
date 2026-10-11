@@ -1,0 +1,12 @@
+{
+    "resource_pack_name": "mceu_items",
+    "texture_name": "atlas.items",
+    "texture_data": {
+        "proactive": {
+            "textures": "textures/items/proactive.png"
+        },
+        "waruactive": {
+            "textures": "textures/items/waruactive.png"
+        }
+    }
+}

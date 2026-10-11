@@ -1,0 +1,28 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "easy:bell"
+        },
+
+        "tags": ["crafting_table"],
+        "pattern": ["AAA", "ABA", "AAA"],
+        "key": {
+            "A": {
+                "item": "minecraft:gunpowder"
+            },
+            "B": {
+                "item": "proactive:proactive"
+            }
+        },
+        "unlock": [
+            {
+                "item": "proactive:proactive"
+            }
+        ],
+        "result": {
+            "item": "proactive:waruactive",
+            "count": 1
+        }
+    }
+}

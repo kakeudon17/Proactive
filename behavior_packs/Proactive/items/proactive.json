@@ -1,0 +1,25 @@
+{
+    "format_version": "1.26.10",
+    "minecraft:item": {
+        "description": {
+            "identifier": "proactive:proactive",
+            "menu_category": {
+                "category": "items"
+            }
+        },
+        "components": {
+            "minecraft:display_name": {
+                "value": "item.proactive_proactive.name"
+            },
+            "minecraft:icon": "proactive",
+            "minecraft:projectile": {
+                "projectile_entity": "proactive:proactive"
+            },
+            "minecraft:throwable": {
+                "do_swing_animation": true,
+                "launch_power_scale": 0.7,
+                "max_launch_power": 0.7
+            }
+        }
+    }
+}

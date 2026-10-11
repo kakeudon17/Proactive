@@ -1,0 +1,40 @@
+{
+    "format_version": "1.26.0",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "proactive:proactive",
+            "is_experimental": false,
+            "is_summonable": true,
+            "is_spawnable": false,
+            "spawn_category": "misc"
+        },
+        "components": {
+            "minecraft:collision_box": {
+                "width": 0.25,
+                "height": 0.25
+            },
+            "minecraft:physics": {},
+            "minecraft:projectile": {
+                "gravity": 0.05,
+                "power": 2,
+                "inertia": 0.7,
+                "on_hit": {
+                    "impact_damage": {
+                        "damage": 0,
+                        "destroy_on_hit": false
+                    }
+                }
+            },
+            "minecraft:pushable": {
+                "is_pushable": false,
+                "is_pushable_by_piston": false
+            },
+            "minecraft:damage_sensor": {
+                "triggers": {
+                    "cause": "all",
+                    "deals_damage": "no"
+                }
+            }
+        }
+    }
+}

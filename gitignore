@@ -1,0 +1,10 @@
+# ライブラリフォルダを除外
+node_modules/
+
+# ビルド成果物を除外
+dist/
+lib/
+
+# 環境変数ファイルを除外
+.vscode/
+.DS_Store

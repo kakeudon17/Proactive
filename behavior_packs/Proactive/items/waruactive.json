@@ -1,0 +1,25 @@
+{
+    "format_version": "1.26.10",
+    "minecraft:item": {
+        "description": {
+            "identifier": "proactive:waruactive",
+            "menu_category": {
+                "category": "items"
+            }
+        },
+        "components": {
+            "minecraft:display_name": {
+                "value": "item.proactive_waruactive.name"
+            },
+            "minecraft:icon": "waruactive",
+            "minecraft:projectile": {
+                "projectile_entity": "proactive:waruactive"
+            },
+            "minecraft:throwable": {
+                "do_swing_animation": true,
+                "launch_power_scale": 0.7,
+                "max_launch_power": 0.7
+            }
+        }
+    }
+}
