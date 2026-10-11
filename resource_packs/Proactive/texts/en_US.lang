@@ -1,3 +1,4 @@
+pack.description=An addon that recreates the Proactive Mod.
 item.proactive_proactive.name=Proactive
 item.proactive_waruactive.name=Waruactive
 Category.Proactive=ProactiveMod

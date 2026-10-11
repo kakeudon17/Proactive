@@ -2,10 +2,10 @@
     "format_version": 2,
     "header": {
         "name": "Proactive BP",
-        "description": "ProactiveMod",
+        "description": "pack.description",
         "uuid": "368d6da3-582d-4609-a869-f221869296ec",
         "version": [1, 0, 0],
-        "min_engine_version": [1, 20, 30]
+        "min_engine_version": [1, 26, 60]
     },
     "modules": [
         {
