@@ -20,5 +20,9 @@
             "uuid": "368d6da3-582d-4609-a869-f221869296ec",
             "version": [0, 0, 1]
         }
-    ]
+    ],
+    "metadata": {
+        "authors": ["kakeudon17"],
+        "product_type": "addon"
+    }
 }

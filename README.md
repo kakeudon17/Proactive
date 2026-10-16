@@ -58,6 +58,7 @@
 - **原作 Mod：** Proactive Mod（Minecraft Java Edition 1.6.4 向け）
 - **参考作品制作：** maru2213様
 - **参考資料：** 本家紹介動画および Minecraft Japan Forum の配布ページ
+- **再現アドオン制作：** kakeudon17
 
 本アドオンは、原作 Mod および参考作品を参考に制作したファンメイドの再現アドオンです。原作者様および参考作品の制作者様に感謝いたします。
 
