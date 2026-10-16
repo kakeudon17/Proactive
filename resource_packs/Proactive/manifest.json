@@ -4,7 +4,7 @@
         "name": "Proactive RP",
         "description": "pack.description",
         "uuid": "20d83f03-5731-4020-8b67-8e6cc234ff25",
-        "version": [1, 0, 0],
+        "version": [0, 0, 1],
         "min_engine_version": [1, 26, 50]
     },
     "modules": [
@@ -12,13 +12,13 @@
             "description": "My Resource Pack",
             "type": "resources",
             "uuid": "7c1aae27-3297-4cf1-8ad2-9d66826282e3",
-            "version": [1, 0, 0]
+            "version": [0, 0, 1]
         }
     ],
     "dependencies": [
         {
             "uuid": "368d6da3-582d-4609-a869-f221869296ec",
-            "version": [1, 0, 0]
+            "version": [0, 0, 1]
         }
     ]
 }

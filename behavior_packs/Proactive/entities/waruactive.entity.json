@@ -10,24 +10,20 @@
         },
         "components": {
             "minecraft:collision_box": {
-                "width": 0.25,
-                "height": 0.25
+                "height": 0.25,
+                "width": 0.25
             },
             "minecraft:physics": {},
             "minecraft:projectile": {
-                "gravity": 0.05,
-                "power": 2,
-                "inertia": 0.7,
-                "on_hit": {
-                    "impact_damage": {
-                        "damage": 0,
-                        "destroy_on_hit": false
-                    }
-                }
+                "angle_offset": 0.0,
+                "gravity": 0.03,
+                "power": 1.0,
+                "isolated_physics": true,
+                "multiple_targets": true
             },
             "minecraft:pushable": {
-                "is_pushable": false,
-                "is_pushable_by_piston": false
+                "is_pushable": true,
+                "is_pushable_by_piston": true
             },
             "minecraft:damage_sensor": {
                 "triggers": {

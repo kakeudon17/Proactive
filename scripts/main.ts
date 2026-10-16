@@ -7,7 +7,7 @@ const WIDTH = 16;
 const HALF_WIDTH = WIDTH / 2;
 const CREATIVE_FILL_HEIGHT = 120;
 const WARU_FILL_HEIGHT = 120;
-const BEDROCK_ID = "minecraft:bedrock";
+const PROTECTED_BLOCK_IDS = ["minecraft:bedrock", "minecraft:end_portal", "minecraft:end_portal_frame"];
 
 function getBounds(centerX: number, centerZ: number, minY: number, maxY: number) {
     return {
@@ -25,7 +25,7 @@ function getBounds(centerX: number, centerZ: number, minY: number, maxY: number)
 }
 
 // クリエイティブ：上から下へ高速一括処理。
-// 岩盤はフィルターで除外する。
+// 保護対象ブロックはフィルターで除外する。
 function carveProactiveCreative(dimension: Dimension, location: Vector3, minY: number, maxY: number): void {
     const centerX = Math.floor(location.x);
     const centerZ = Math.floor(location.z);
@@ -40,7 +40,7 @@ function carveProactiveCreative(dimension: Dimension, location: Vector3, minY: n
         try {
             dimension.fillBlocks(new BlockVolume(min, max), "minecraft:air", {
                 blockFilter: {
-                    excludeTypes: [BEDROCK_ID],
+                    excludeTypes: PROTECTED_BLOCK_IDS,
                 },
                 ignoreChunkBoundErrors: true,
             });
@@ -52,8 +52,8 @@ function carveProactiveCreative(dimension: Dimension, location: Vector3, minY: n
     }
 }
 
-// サバイバル：上から下へ1層ずつ処理。
-// 岩盤を保存し、destroy モードで破壊してから復元する。
+// サバイバル：16×16×16以内の範囲をまとめて処理。
+// 保護対象ブロックを保存し、destroy モードで破壊してから復元する。
 function* carveProactiveSurvivalJob(
     dimension: Dimension,
     location: Vector3,
@@ -64,45 +64,60 @@ function* carveProactiveSurvivalJob(
     const centerX = Math.floor(location.x);
     const centerZ = Math.floor(location.z);
 
-    for (let y = maxY; y >= minY; y--) {
-        const { min, max } = getBounds(centerX, centerZ, y, y);
+    for (let topY = maxY; topY >= minY; topY -= 16) {
+        const bottomY = Math.max(minY, topY - 15);
+        const { min, max } = getBounds(centerX, centerZ, bottomY, topY);
 
-        const bedrockPositions: Vector3[] = [];
+        const protectedBlocks: { position: Vector3; typeId: string }[] = [];
+        let hasBreakableBlock = false;
 
-        // 16×16の岩盤を確認。16ブロックごとに処理を譲る。
+        // 16×16×16の保護対象ブロックを確認。16ブロックごとに処理を譲る。
         for (let x = min.x; x <= max.x; x++) {
             for (let z = min.z; z <= max.z; z++) {
-                try {
-                    const block = dimension.getBlock({ x, y, z });
+                for (let y = bottomY; y <= topY; y++) {
+                    try {
+                        const block = dimension.getBlock({ x, y, z });
 
-                    if (block?.typeId === BEDROCK_ID) {
-                        bedrockPositions.push({ x, y, z });
+                        if (!block || block.isAir) {
+                            continue;
+                        }
+
+                        if (PROTECTED_BLOCK_IDS.includes(block.typeId)) {
+                            protectedBlocks.push({
+                                position: { x, y, z },
+                                typeId: block.typeId,
+                            });
+                        } else {
+                            hasBreakableBlock = true;
+                        }
+                    } catch {
+                        // 読み取れないブロックはスキップ
                     }
-                } catch {
-                    // 読み取れないブロックはスキップ
                 }
+
+                yield;
             }
-
-            yield;
         }
 
-        // 1回につき256ブロック
-        try {
-            dimension.runCommand(
-                `fill ${min.x} ${y} ${min.z} ` +
-                    `${max.x} ${y} ${max.z} ` +
-                    `minecraft:air ${dropItems ? "destroy" : "replace"}`
-            );
-        } catch (error) {
-            console.warn(`[Proactive BP] Survival fill failed at Y=${y}: ${error}`);
-        }
-
-        // 岩盤を復元
-        for (const pos of bedrockPositions) {
+        if (hasBreakableBlock) {
+            // 16×16×16以内なら1回で処理
             try {
-                dimension.setBlockType(pos, BEDROCK_ID);
+                dimension.runCommand(
+                    `fill ${min.x} ${bottomY} ${min.z} ` +
+                        `${max.x} ${topY} ${max.z} ` +
+                        `minecraft:air ${dropItems ? "destroy" : "replace"}`
+                );
             } catch (error) {
-                console.warn(`[Proactive BP] Bedrock restore failed: ${error}`);
+                console.warn(`[Proactive BP] Survival fill failed at Y=${bottomY}: ${error}`);
+            }
+        }
+
+        // 保護対象ブロックを復元
+        for (const { position, typeId } of protectedBlocks) {
+            try {
+                dimension.setBlockType(position, typeId);
+            } catch (error) {
+                console.warn(`[Proactive BP] Protected block restore failed: ${error}`);
             }
 
             yield;
@@ -147,11 +162,11 @@ world.afterEvents.projectileHitBlock.subscribe((event) => {
         const dimension = event.dimension;
         const location = event.location;
         const heightRange = dimension.heightRange;
-        const centerY = Math.floor(location.y);
+        const maxBlockY = heightRange.max - 1;
 
         if (id === PROACTIVE_ID) {
-            const minY = Math.max(centerY, heightRange.min);
-            const maxY = heightRange.max - 1;
+            const minY = Math.max(Math.floor(location.y), heightRange.min);
+            const maxY = maxBlockY;
 
             if (minY > maxY) {
                 return;
@@ -179,7 +194,7 @@ world.afterEvents.projectileHitBlock.subscribe((event) => {
             }
         } else {
             // waruactive は高さ全体をくり抜く
-            system.runJob(carveWaruactiveJob(dimension, location, heightRange.min, heightRange.max - 1));
+            system.runJob(carveWaruactiveJob(dimension, location, heightRange.min, maxBlockY));
         }
     } catch (error) {
         console.warn(`[Proactive BP] ${error}`);

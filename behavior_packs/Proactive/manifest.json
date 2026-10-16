@@ -4,7 +4,7 @@
         "name": "Proactive BP",
         "description": "pack.description",
         "uuid": "368d6da3-582d-4609-a869-f221869296ec",
-        "version": [1, 0, 0],
+        "version": [0, 0, 1],
         "min_engine_version": [1, 26, 50]
     },
     "modules": [
@@ -13,7 +13,7 @@
             "language": "javascript",
             "type": "script",
             "uuid": "0a96242c-7182-4e1a-8295-0b2305008022",
-            "version": [1, 0, 0],
+            "version": [0, 0, 1],
             "entry": "scripts/main.js"
         }
     ],
@@ -24,7 +24,7 @@
         },
         {
             "uuid": "20d83f03-5731-4020-8b67-8e6cc234ff25",
-            "version": [1, 0, 0]
+            "version": [0, 0, 1]
         }
     ]
 }
